@@ -17,7 +17,7 @@ Siga os passos abaixo para executar o projeto em seu ambiente local:
 
 ```bash
 # Clone o repositório
-git clone <URL_DO_REPOSITÓRIO>
+git clone https://github.com/MarcusAbagnale/Desafio-Laravel-BackEnd
 
 # Navegue até o diretório do projeto
 cd meu-projeto-laravel-docker
