@@ -1,47 +1,39 @@
-# Desafio-Laravel-BackEnd
-Desafio de desenvolvimento do Backend em Laravel
-# Projeto Laravel com Docker
+1. **Clone o repositório**
+   Primeiro, você precisa clonar o repositório usando o seguinte comando:
 
-Este repositório contém um projeto Laravel configurado para ser executado em um ambiente Docker. Você também encontrará um backup do banco de dados para restaurar os dados.
-
-## Pré-requisitos
-
-Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
-
-- Docker: [Instalação do Docker](https://docs.docker.com/get-docker/)
-- Docker Compose: [Instalação do Docker Compose](https://docs.docker.com/compose/install/)
-
-## Executando o Projeto
-
-Siga os passos abaixo para executar o projeto em seu ambiente local:
-
-```bash
-# Clone o repositório
 git clone https://github.com/MarcusAbagnale/Desafio-Laravel-BackEnd
 
-# Navegue até o diretório do projeto
-cd meu-projeto-laravel-docker
 
-# Construa e inicie os contêineres Docker
+2. **Navegue até o diretório clonado**
+Em seguida, navegue até o diretório que acabou de clonar usando o comando:
+
+cd Desafio-Laravel-BackEnd
+
+
+3. **Execute o Docker**
+Agora, você pode iniciar os serviços do Docker com o seguinte comando:
+
 docker-compose up -d
 
-# Instale as dependências do Laravel usando o Composer
-docker-compose exec app composer install
 
-# Copie o arquivo de ambiente .env
-docker-compose exec app cp .env.example .env
+4. **Execute as migrações do Laravel**
+Com os serviços do Docker em execução, você pode executar as migrações do Laravel com este comando:
 
-# Gere uma chave de criptografia do Laravel
-docker-compose exec app php artisan key:generate
-
-# Execute as migrações do banco de dados
-docker-compose exec app php artisan migrate
+docker exec -it desafio-b php artisan migrate
 
 
-Notas Adicionais
-Certifique-se de modificar o arquivo .env com as configurações de banco de dados apropriadas, se necessário.
+5. **Crie um usuário**
+Em seguida, crie um novo usuário executando o seguinte comando:
 
-Lembre-se de que o ambiente Docker deve estar em execução sempre que você desejar usar o projeto Laravel.
+docker exec php artisan user:create && php-fpm
 
 
+6. **Obtenha o token**
+Finalmente, você pode obter o token enviando uma solicitação POST com as seguintes informações para a API:
 
+ ```json
+ {
+     "email": "marcus@marcus.com",
+     "password": "manaus"
+ }
+ ```
