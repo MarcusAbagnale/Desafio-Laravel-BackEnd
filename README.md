@@ -43,11 +43,5 @@ Certifique-se de modificar o arquivo .env com as configurações de banco de dad
 
 Lembre-se de que o ambiente Docker deve estar em execução sempre que você desejar usar o projeto Laravel.
 
-Certifique-se de substituir <URL_DO_REPOSITÓRIO> pela URL real do seu repositório Git.
 
-Divirta-se desenvolvendo seu projeto Laravel com Docker!
 
-perl
-Copy code
-
-Agora você pode copiar este bloco de código e colá-lo no arquivo README.md 
