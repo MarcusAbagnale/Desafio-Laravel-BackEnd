@@ -38,5 +38,7 @@
  }
  ```
 
+7. **Exibição da imagem**
+    Execute docker exec -it desafio-b php artisan storage:link para exibir corretamente a imagem do produto cadastrado.
 
 
