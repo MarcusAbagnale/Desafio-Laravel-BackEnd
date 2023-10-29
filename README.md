@@ -11,24 +11,25 @@
 
 
 3. **Execute o Docker**
-    Agora, você pode iniciar os serviços do Docker com o seguinte comando:
+    Agora, você pode iniciar os serviços do Docker com os seguintes comandos:
 
-    docker-compose up -d
+   docker build -t desafio-b .
+   docker-compose up -d
 
 
-4. **Execute as migrações do Laravel**
+5. **Execute as migrações do Laravel**
     Com os serviços do Docker em execução, você pode executar as migrações do Laravel com este comando:
 
     docker exec -it desafio-b php artisan migrate
 
 
-5. **Crie um usuário**
+6. **Crie um usuário**
     Em seguida, crie um novo usuário executando o seguinte comando:
 
     docker exec -it desafio-b php artisan user:create
 
 
-6. **Obtenha o token**
+7. **Obtenha o token**
     Finalmente, você pode obter o token enviando uma solicitação POST com as seguintes informações para a API:
 
  ```json
