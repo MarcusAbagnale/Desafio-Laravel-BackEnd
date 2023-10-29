@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('descricao', 200);
             $table->double('preco', 8, 2);
             $table->date('data_validade');
-            $table->binary('imagem'); 
+            $table->string('imagem'); 
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->timestamps();

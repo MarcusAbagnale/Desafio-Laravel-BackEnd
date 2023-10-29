@@ -12,28 +12,27 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::paginate(3);
         foreach ($produtos as $produto) {
-            $produto->imagem = Storage::url('fotos/' . $produto->imagem);
+            $produto->imagem = basename(Storage::url($produto->imagem));
         }
 
         return response()->json($produtos);
     }
 
     public function search(Request $request)
-{
-    $query = $request->input('query');
-    
-    $result = Produto::where('nome', 'like', '%' . $query . '%')
-        ->orWhere('descricao', 'like', '%' . $query . '%')
-        ->paginate(3); // Use a mesma paginação para a pesquisa
+    {
+        $query = $request->input('query');
 
-    // Format the response to match the expected format
-    return response()->json([
-        'data' => $result->items(), // Only return the items
-        'current_page' => $result->currentPage(),
-        'per_page' => $result->perPage(),
-        'total' => $result->total(),
-    ]);
-}
+        $result = Produto::where('nome', 'like', '%' . $query . '%')
+            ->orWhere('descricao', 'like', '%' . $query . '%')
+            ->paginate(3);
+
+        return response()->json([
+            'data' => $result->items(),
+            'current_page' => $result->currentPage(),
+            'per_page' => $result->perPage(),
+            'total' => $result->total(),
+        ]);
+    }
 
 
 
@@ -56,14 +55,19 @@ class ProdutoController extends Controller
         if ($request->hasFile('imagem')) {
             $foto = $request->file('imagem');
             $nome = $foto->hashName();
-            $foto->storeAs('fotos', $nome);
+            $foto->move('fotos', $nome);
             $data['imagem'] = $nome;
         }
+
+        $preco = str_replace(',', '.', $request->input('preco'));
+
+        $data['preco'] = $preco;
 
         $produto = Produto::create($data);
 
         return response()->json($produto, 201);
     }
+
 
 
     public function update(Request $request, $id)
@@ -81,9 +85,13 @@ class ProdutoController extends Controller
 
             $foto = $request->file('imagem');
             $nome = $foto->hashName();
-            $foto->storeAs('fotos', $nome);
+            $foto->move('fotos', $nome);
             $data['imagem'] = $nome;
         }
+
+        $preco = str_replace(',', '.', $request->input('preco'));
+
+        $data['preco'] = $preco;
 
         $produto->update($data);
 
@@ -99,10 +107,8 @@ class ProdutoController extends Controller
             return response()->json(['message' => 'Produto não encontrado'], 404);
         }
 
-        // Exclua a foto do disco
         Storage::delete('fotos/' . $produto->imagem);
 
-        // Exclua o produto do banco de dados
         $produto->delete();
 
         return response()->json(['message' => 'Produto excluído com sucesso'], 200);

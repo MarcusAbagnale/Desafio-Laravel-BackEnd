@@ -1,0 +1,62 @@
+version: '3'
+services:
+  # O serviço do aplicativo Laravel
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: desafio-b
+    container_name: desafio-b
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./storage:/var/www/storage
+    networks:
+      - laravel
+
+  # O serviço do servidor web Nginx
+  webserver:
+    image: nginx:alpine
+    container_name: nginx-service
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '8000:80'
+    volumes:
+      - ./:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./storage:/var/www/html/storage
+
+    networks:
+      - laravel
+
+  # O serviço do banco de dados MySQL
+  db:
+    image: mysql:5.7.22
+    container_name: mysql-57
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '4306:3306'
+    environment:
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - mysqldata:/var/lib/mysql/
+    networks:
+      - laravel
+
+networks:
+  laravel:
+
+volumes:
+  mysqldata:

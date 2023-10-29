@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Categoria; // Certifique-se de importar o modelo Categoria
+use App\Models\Categoria; 
 
 class CategoriaController extends Controller
 {
@@ -16,14 +16,14 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome' => 'required|max:100', // Valide os campos conforme necessário
+            'nome' => 'required|max:100', 
         ]);
 
         $categoria = Categoria::create([
             'nome' => $request->input('nome'),
         ]);
 
-        return response()->json(['categoria' => $categoria], 201); // 201 Created
+        return response()->json(['categoria' => $categoria], 201); 
     }
 
     public function show($id)
@@ -31,7 +31,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
 
         if (!$categoria) {
-            return response()->json(['message' => 'Categoria não encontrada'], 404); // 404 Not Found
+            return response()->json(['message' => 'Categoria não encontrada'], 404); 
         }
 
         return response()->json(['categoria' => $categoria]);
@@ -40,13 +40,13 @@ class CategoriaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nome' => 'required|max:100', // Valide os campos conforme necessário
+            'nome' => 'required|max:100', 
         ]);
 
         $categoria = Categoria::find($id);
 
         if (!$categoria) {
-            return response()->json(['message' => 'Categoria não encontrada'], 404); // 404 Not Found
+            return response()->json(['message' => 'Categoria não encontrada'], 404); 
         }
 
         $categoria->update([
@@ -61,7 +61,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
 
         if (!$categoria) {
-            return response()->json(['message' => 'Categoria não encontrada'], 404); // 404 Not Found
+            return response()->json(['message' => 'Categoria não encontrada'], 404); 
         }
 
         $categoria->delete();
