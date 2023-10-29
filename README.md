@@ -25,7 +25,7 @@
 5. **Crie um usuário**
     Em seguida, crie um novo usuário executando o seguinte comando:
 
-    docker exec php artisan user:create && php-fpm
+    docker exec -it desafio-b php artisan user:create
 
 
 6. **Obtenha o token**
